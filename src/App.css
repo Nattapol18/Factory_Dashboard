@@ -1,0 +1,487 @@
+:root {
+  --primary-color: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --secondary-color: #64748b;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --light-color: #f9fafb;
+  --gray-color: #f3f4f6;
+  --border-radius: 12px;
+  --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
+  
+  /* เพิ่มตัวแปรสำหรับ gradient และ animation */
+  --gradient-blue: linear-gradient(135deg, #60a5fa, #2563eb);
+  --gradient-green: linear-gradient(135deg, #34d399, #059669);
+  --gradient-orange: linear-gradient(135deg, #fbbf24, #d97706);
+  --card-hover-transform: translateY(-8px) scale(1.02);
+}
+
+/* === เพิ่ม Animation Keys === */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  background-color: #f8fafc;
+  color: var(--dark-color);
+  line-height: 1.6;
+  /* เพิ่ม background pattern เบาๆ */
+  background-image: 
+    radial-gradient(circle at 25px 25px, rgba(37, 99, 235, 0.03) 2%, transparent 0%),
+    radial-gradient(circle at 75px 75px, rgba(37, 99, 235, 0.03) 2%, transparent 0%);
+  background-size: 100px 100px;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* เพิ่ม animation เมื่อโหลดเพจ */
+  animation: fadeIn 0.8s ease-out;
+}
+
+h1, h2, h3, h4 {
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 25px;
+  box-shadow: 0 4px 20px -3px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* เพิ่มลูกเล่นพื้นหลังให้ header */
+.dashboard-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 25%);
+  z-index: 0;
+}
+
+.dashboard-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  /* เพิ่ม effect ที่ text */
+  background: linear-gradient(to right, #ffffff, #e2e8f0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.dashboard-subtitle {
+  font-weight: 400;
+  opacity: 0.9;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+}
+
+.main-content {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section-title {
+  position: relative;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid var(--primary-light);
+  display: inline-block;
+}
+
+/* เพิ่ม effect ให้ section title */
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 40%;
+  height: 2px;
+  background: var(--primary-color);
+  animation: pulse 2s infinite;
+}
+
+.card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+  margin-bottom: 24px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* เพิ่ม effect ให้ card */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-blue);
+  transition: var(--transition);
+  opacity: 0.8;
+}
+
+/* ปรับแต่ง card hover */
+.card:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.15);
+}
+
+.card:hover::before {
+  height: 6px;
+}
+
+/* เพิ่มสีพื้นหลังตามประเภทวัสดุ */
+.card[data-material="SESHE06"]::before {
+  background: var(--gradient-blue);
+}
+
+.card[data-material="SESDM21"]::before {
+  background: var(--gradient-green);
+}
+
+.card[data-material="SESDG28"]::before {
+  background: var(--gradient-orange);
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative;
+}
+
+/* เพิ่ม effect กระพริบให้กับสถานะ */
+.status-working {
+  background-color: var(--success-color);
+  box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+  animation: pulse 2s infinite;
+}
+
+.status-stopped {
+  background-color: var(--danger-color);
+}
+
+.status-maintenance {
+  background-color: var(--warning-color);
+  animation: pulse 3s infinite;
+}
+
+.machine-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+  filter: brightness(0.95);
+}
+
+.card:hover .machine-image {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+.machine-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--primary-dark);
+  transition: var(--transition);
+}
+
+.card:hover .machine-title {
+  color: var(--primary-color);
+}
+
+.machine-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--secondary-color);
+  transition: var(--transition);
+}
+
+.info-label {
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.gauge-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-label {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  margin-bottom: 8px;
+}
+
+.storage-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* ปรับแต่ง storage-info-item */
+.storage-info-item {
+  background-color: var(--gray-color);
+  padding: 14px;
+  border-radius: 10px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.storage-info-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* เพิ่ม effect ให้ item มีสีที่แตกต่างกัน */
+.storage-info-grid .storage-info-item:nth-child(1) {
+  background: linear-gradient(to right, var(--gray-color), #e5e7eb);
+}
+
+.storage-info-grid .storage-info-item:nth-child(2) {
+  background: linear-gradient(to right, #e5e7eb, var(--gray-color));
+}
+
+.storage-info-grid .storage-info-item:nth-child(3) {
+  background: linear-gradient(to bottom, var(--gray-color), #e5e7eb);
+}
+
+.storage-info-grid .storage-info-item:nth-child(4) {
+  background: linear-gradient(to bottom, #e5e7eb, var(--gray-color));
+}
+
+.info-value {
+  font-weight: 600;
+  margin-top: 6px;
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+
+.storage-info-item:hover .info-value {
+  transform: scale(1.05);
+}
+
+/* เพิ่ม effect loading สำหรับข้อมูลที่กำลังอัปเดต */
+.info-value.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.info-value.loading::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* ปรับแต่ง tooltip สำหรับกราฟ */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+  padding: 12px !important;
+}
+
+.dashboard-footer {
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  text-align: center;
+  margin-top: auto;
+  background-color: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  padding: 10px 0;
+}
+
+/* เพิ่ม animation เข้ามาเมื่อ item ปรากฏในหน้าจอ */
+.grid-container > * {
+  animation: fadeIn 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.grid-container > *:nth-child(1) { animation-delay: 0.1s; }
+.grid-container > *:nth-child(2) { animation-delay: 0.2s; }
+.grid-container > *:nth-child(3) { animation-delay: 0.3s; }
+.grid-container > *:nth-child(4) { animation-delay: 0.4s; }
+.grid-container > *:nth-child(5) { animation-delay: 0.5s; }
+.grid-container > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* เพิ่ม effect สำหรับการแสดงค่าน้ำหนัก */
+.weight-value {
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.weight-value.increasing {
+  color: var(--success-color);
+  animation: float 1s ease-in-out;
+}
+
+.weight-value.decreasing {
+  color: var(--danger-color);
+  animation: float 1s ease-in-out;
+}
+
+/* Responsive styles เพิ่มเติม */
+@media screen and (max-width: 992px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .storage-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-header {
+    padding: 20px;
+  }
+  
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.3rem;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+  }
+  
+  .card {
+    padding: 18px;
+  }
+}
+
+/* เพิ่ม Dark Mode สำหรับผู้ใช้ที่เปิด preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #1e293b;
+    --gray-color: #334155;
+  }
+  
+  body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+  }
+  
+  .card {
+    background-color: #1e293b;
+    border-color: #334155;
+  }
+  
+  .storage-info-item {
+    background-color: #334155;
+  }
+  
+  .info-value {
+    color: #60a5fa;
+  }
+  
+  .dashboard-footer {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    border-top-color: #334155;
+  }
+}
