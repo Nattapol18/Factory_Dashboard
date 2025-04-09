@@ -86,8 +86,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 • แสดงชื่อของพื้นทเก็บข้อมูล: ชื่อหรือรหัสของพื้นที่เก็บข้อมูล (SemiBatch)
 • แสดงระดับของพื้นที่เก็บข้อมูล: ระดับหรือปริมาณที่เก็บได้ในพื้นที่นั้น
 
-![image](https://github.com/user-attachments/assets/da3597b3-6db6-423a-a6e1-0a423408ffc2)
-
+![image](https://github.com/user-attachments/assets/d4f60286-36aa-472c-b8e1-3d76e729fa96)
 
 ![image](https://github.com/user-attachments/assets/6bdfb08b-6fd0-4c6b-99f8-d51629f0ee4b)
 
