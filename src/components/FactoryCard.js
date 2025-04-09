@@ -47,7 +47,7 @@ const FactoryCard = ({ machine }) => {
   return (
     <div className="card" data-material={machine.materialType}>
       <img 
-        src={machine.image || '/images/machine-placeholder.jpg'} 
+        src={machine.image || './images/machine-placeholder.jpg'} 
         alt={machine.name}
         className="machine-image"
       />
@@ -96,7 +96,7 @@ const FactoryCard = ({ machine }) => {
           <div className="storage-info-item">
             <div className="gauge-label">น้ำหนักสินค้า</div>
             <div className={`info-value weight-value ${weightTrend}`}>
-              {machine.weight} กก.
+              {machine.weight} 
             </div>
           </div>
           
