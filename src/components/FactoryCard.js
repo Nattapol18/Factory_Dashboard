@@ -6,17 +6,19 @@ const FactoryCard = ({ machine }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentMachine, setCurrentMachine] = useState(machine);
   const [statusChangeTime, setStatusChangeTime] = useState(null);
-  const [imageError, setImageError] = useState(false);
+  const [imageError, setImageError] = useState(false); // เปลี่ยนค่าเริ่มต้นเป็น false เพื่อพยายามโหลดรูปภาพจริงก่อน
   
   // ใช้ useRef เพื่อเก็บข้อมูล interval ID
   const intervalRef = useRef(null);
   const loadingTimerRef = useRef(null);
   const statusIntervalRef = useRef(null);
+  const resupplyIntervalRef = useRef(null); // เพิ่ม ref สำหรับการเติมวัตถุดิบ
 
   // เริ่มการจำลองการเปลี่ยนแปลงข้อมูลแบบเรียลไทม์
   useEffect(() => {
     startMachineSimulation();
     startStatusSimulation();
+    startResupplySimulation(); // เริ่มการจำลองการเติมวัตถุดิบ
     
     // เมื่อ component unmount ให้ล้าง interval
     return () => {
@@ -29,8 +31,53 @@ const FactoryCard = ({ machine }) => {
       if (statusIntervalRef.current) {
         clearInterval(statusIntervalRef.current);
       }
+      if (resupplyIntervalRef.current) {
+        clearInterval(resupplyIntervalRef.current);
+      }
     };
   }, []);
+
+  // จำลองการเติมวัตถุดิบตลอดเวลา
+  const startResupplySimulation = () => {
+    // ล้าง interval เดิมถ้ามี
+    if (resupplyIntervalRef.current) {
+      clearInterval(resupplyIntervalRef.current);
+    }
+    
+    // สร้าง interval สำหรับการเติมวัตถุดิบทุก 15-30 วินาที
+    resupplyIntervalRef.current = setInterval(() => {
+      // จำลองการเติมวัตถุดิบเฉพาะเมื่อวัตถุดิบน้อยกว่า 70% ของความจุสูงสุด
+      setCurrentMachine(prev => {
+        if (!prev.storageData) return prev;
+        
+        const currentCapacity = parseFloat(prev.storageData.rawMaterial);
+        const maxCapacity = prev.storageData.maxCapacity;
+        
+        // ตรวจสอบว่าควรเติมวัตถุดิบหรือไม่ (ถ้าน้อยกว่า 70% ของความจุสูงสุด)
+        if (currentCapacity < maxCapacity * 0.7) {
+          // คำนวณปริมาณการเติม (10-25% ของความจุที่ขาดไป)
+          const capacityDeficit = maxCapacity - currentCapacity;
+          const resupplyPercentage = Math.random() * 0.15 + 0.1; // 10-25%
+          const resupplyAmount = capacityDeficit * resupplyPercentage;
+          
+          // เพิ่มการแสดงเหตุการณ์การเติมวัตถุดิบในคอนโซล (สำหรับการทดสอบ)
+          console.log(`เติมวัตถุดิบ ${resupplyAmount.toFixed(2)} กก. ให้กับ ${prev.name}`);
+          
+          // อัปเดตข้อมูลวัตถุดิบคงเหลือ
+          return {
+            ...prev,
+            storageData: {
+              ...prev.storageData,
+              rawMaterial: (currentCapacity + resupplyAmount).toFixed(1),
+              lastResupply: new Date().toLocaleTimeString() // เก็บเวลาที่เติมล่าสุด
+            }
+          };
+        }
+        
+        return prev;
+      });
+    }, Math.floor(Math.random() * 15000) + 15000); // สุ่มระหว่าง 15-30 วินาที
+  };
 
   // จำลองการเปลี่ยนแปลงสถานะแบบเรียลไทม์
   const startStatusSimulation = () => {
@@ -157,11 +204,13 @@ const FactoryCard = ({ machine }) => {
         // อัปเดตข้อมูลคงเหลือ (ถ้ามี)
         let updatedStorage = prev.storageData;
         if (updatedStorage && isWorking) {
-          const materialChange = Math.random() * 5 - 2;
+          // ใช้วัตถุดิบในการผลิต (ลดลงตามการทำงาน)
+          const usageRate = newSpeed / prev.maxSpeed; // อัตราการใช้วัตถุดิบตามความเร็ว
+          const materialUsage = usageRate * (Math.random() * 4 + 1); // 1-5 หน่วยต่อการอัปเดต ขึ้นอยู่กับความเร็ว
+          
           updatedStorage = {
             ...updatedStorage,
-            rawMaterial: Math.max(0, Math.min(updatedStorage.maxCapacity, 
-                                            updatedStorage.rawMaterial + materialChange)).toFixed(1)
+            rawMaterial: Math.max(0, (parseFloat(updatedStorage.rawMaterial) - materialUsage).toFixed(1))
           };
         }
         
@@ -228,23 +277,32 @@ const FactoryCard = ({ machine }) => {
     }
   };
 
-  // ใช้รูปภาพจาก machine.image หรือใช้ placeholder ถ้าไม่มีรูป
+  // แก้ไขฟังก์ชันนี้ให้ใช้ path ที่ถูกต้อง
   const getMachineImage = () => {
-    // หากมีรูปภาพใน machine และยังไม่มีข้อผิดพลาดการโหลดรูป
-    if (currentMachine.image && !imageError) {
-      return currentMachine.image;
-    }    
-    
-    // ถ้าไม่มีรูปหรือโหลดรูปไม่สำเร็จ ให้ใช้ placeholder
-    const colors = ['4f46e5', '10b981', 'f59e0b'];
-    const colorIndex = (currentMachine.id - 1) % colors.length;
-    
-    return `https://via.placeholder.com/300x200/${colors[colorIndex]}/ffffff?text=เครื่องจักร ${currentMachine.id}`;
+    // ถ้ามีข้อผิดพลาดในการโหลดรูปภาพ หรือยังไม่ได้พยายามโหลด
+    if (imageError) {
+      const colors = ['4f46e5', '10b981', 'f59e0b'];
+      const colorIndex = (currentMachine.id - 1) % colors.length;
+      return `https://via.placeholder.com/300x200/${colors[colorIndex]}/ffffff?text=เครื่องจักร ${currentMachine.id}`;
+    } else {
+      // ใช้ path ที่ถูกต้องสำหรับรูปภาพ
+      return `${process.env.PUBLIC_URL}${currentMachine.image}`;
+    }
   };
 
   // จัดการเมื่อมีข้อผิดพลาดในการโหลดรูปภาพ
   const handleImageError = () => {
-    setImageError(true);
+    setImageError(true); // เมื่อโหลดรูปภาพล้มเหลว จะใช้ placeholder แทน
+  };
+
+  // คำนวณเปอร์เซ็นต์ของวัตถุดิบที่เหลืออยู่
+  const getRawMaterialPercentage = () => {
+    if (!currentMachine.storageData) return 0;
+    
+    const rawMaterial = parseFloat(currentMachine.storageData.rawMaterial);
+    const maxCapacity = currentMachine.storageData.maxCapacity;
+    
+    return (rawMaterial / maxCapacity * 100).toFixed(1);
   };
 
   return (
@@ -302,7 +360,11 @@ const FactoryCard = ({ machine }) => {
             <div className="gauge-label">วัตถุดิบคงเหลือ</div>
             <div className={`info-value ${isLoading ? 'loading' : ''}`}>
               {currentMachine.storageData.rawMaterial} กก.
+              <span className="material-percentage">({getRawMaterialPercentage()}%)</span>
             </div>
+            {currentMachine.storageData.lastResupply && (
+              <div className="resupply-info">เติมล่าสุด: {currentMachine.storageData.lastResupply}</div>
+            )}
           </div>
           
           <div className="storage-info-item">

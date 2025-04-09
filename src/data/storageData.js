@@ -242,7 +242,7 @@ const machineData = [
     status: "ทำงาน",
     speed: 75, // ความเร็วปัจจุบัน (เปอร์เซ็นต์)
     maxSpeed: 100, // ความเร็วสูงสุด
-    image: "./images/machine1.jpg",
+    image: "/images/machine1.jpg",
     description: "เครื่องผลิตวัสดุ SESHE06 ความเร็วสูง",
     materialType: "SESHE06",
     weight: 7336.02,
@@ -259,7 +259,7 @@ const machineData = [
     status: "หยุดทำงาน",
     speed: 0, // ความเร็วปัจจุบัน (เปอร์เซ็นต์)
     maxSpeed: 100, // ความเร็วสูงสุด
-    image: "./images/machine2.jpg",
+    image: "/images/machine2.jpg",
     description: "เครื่องผลิตวัสดุ SESDM21 ประสิทธิภาพสูง",
     materialType: "SESDM21",
     weight: 67.33,
@@ -276,7 +276,7 @@ const machineData = [
     status: "ทำงาน",
     speed: 45, // ความเร็วปัจจุบัน (เปอร์เซ็นต์)
     maxSpeed: 100, // ความเร็วสูงสุด
-    image: "./images/machine3.jpg",
+    image: "/images/machine3.jpg",
     description: "เครื่องผลิตวัสดุ SESDG28 ประหยัดพลังงาน",
     materialType: "SESDG28",
     weight: 239.87,
