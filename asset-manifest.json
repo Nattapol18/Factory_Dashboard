@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Nattapol18/Factory_Dashboard/static/css/main.e8e0b110.css",
+    "main.js": "/Nattapol18/Factory_Dashboard/static/js/main.c2534f9e.js",
+    "index.html": "/Nattapol18/Factory_Dashboard/index.html",
+    "main.e8e0b110.css.map": "/Nattapol18/Factory_Dashboard/static/css/main.e8e0b110.css.map",
+    "main.c2534f9e.js.map": "/Nattapol18/Factory_Dashboard/static/js/main.c2534f9e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e8e0b110.css",
+    "static/js/main.c2534f9e.js"
+  ]
+}
