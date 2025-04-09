@@ -40,7 +40,9 @@ const StorageCard = ({ storageData }) => {
   };
 
   // Format น้ำหนักให้แสดงทศนิยม 2 ตำแหน่ง
-  const formatWeight = (weight) => Math.abs(weight).toFixed(2);
+  const formatWeight = (weight) => {
+    return weight.toFixed(2);
+  };
 
   // สีวัสดุตามประเภท
   const getMaterialColor = (material) => {
@@ -99,13 +101,13 @@ const StorageCard = ({ storageData }) => {
           <div className="info-value">{storageData.Material}</div>
         </div>
         <div className="storage-info-item">
-          <div>รหัส SemiBatch</div>
+          <div>รหัสพื้นที่เก็บข้อมูล</div>
           <div className="info-value">{storageData.SemiBatch}</div>
         </div>
         <div className="storage-info-item">
-          <div>น้ำหนักปัจจุบัน</div>
+          <div>พื้นที่เก็บข้อมูลปัจจุบัน</div>
           <div className={`info-value weight-value ${weightChange}`}>
-            {formatWeight(storageData.Act_Weight)} กก.
+            {formatWeight(storageData.Act_Weight)} 
             {weightChangePercent && (
               <span style={{ 
                 fontSize: '0.75em', 
@@ -154,7 +156,7 @@ const StorageCard = ({ storageData }) => {
               stroke="#cbd5e1"
             />
             <Tooltip
-              formatter={(value) => [`${formatWeight(value)} กก.`, 'น้ำหนัก']}
+              formatter={(value) => [`${formatWeight(value)} `, 'พื้นที่เก็บข้อมูล']}
               labelFormatter={(label, payload) => {
                 try {
                   // ใช้ originalDateTime เพื่อแสดงเวลาที่สมบูรณ์
@@ -189,7 +191,7 @@ const StorageCard = ({ storageData }) => {
                 fill: materialColor,
                 stroke: 'white',
               }}
-              name="น้ำหนัก (กก.)"
+              name="ปริมาณพื้นที่เก็บข้อมูล"
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -207,10 +209,10 @@ const StorageCard = ({ storageData }) => {
           justifyContent: 'space-between'
         }}>
           <div>
-            <span style={{ fontWeight: 'bold', color: materialColor }}>น้ำหนักเริ่มต้น:</span> {formatWeight(formattedHistory[0].value)} กก.
+            <span style={{ fontWeight: 'bold', color: materialColor }}>พื้นที่เก็บข้อมูลเริ่มต้น:</span> {formatWeight(formattedHistory[0].value)} กก.
           </div>
           <div style={{ textAlign: 'right' }}>
-            <span style={{ fontWeight: 'bold', color: materialColor }}>น้ำหนักล่าสุด:</span> {formatWeight(formattedHistory[formattedHistory.length - 1].value)} กก.
+            <span style={{ fontWeight: 'bold', color: materialColor }}>พื้นที่เก็บข้อมูลล่าสุด:</span> {formatWeight(formattedHistory[formattedHistory.length - 1].value)} กก.
           </div>
         </div>
       )}
