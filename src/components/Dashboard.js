@@ -59,7 +59,7 @@ const Dashboard = () => {
       </main>
 
       <footer className="dashboard-footer">
-        <p>Factory Dashboard &copy; 2024 | สถานะระบบ: ออนไลน์</p>
+        <p>Factory Dashboard &copy; 2024</p>
       </footer>
     </div>
   );
