@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+![image](https://github.com/user-attachments/assets/7cb0613f-97dc-4124-8cb6-97b71016f415)# Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,3 +68,28 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+นี่คือหน้าจอแสดงผลของเว็บแอปตามโจทย์ที่ได้รับ
+
+หน้า dashboard ของเครื่องจักรโรงงานประกอบด้วย
+• แสดงภำพของผลิตภัณฑ์: ให้แสดงภาพที ่เกี่ยวข้องกับเครื่องจักรหรือผลิตภัณฑ์ที ่ก าลังตรวจสอบ 
+• แสดงชอเครองจกร: ให้แสดงชื ่อของเครื่องจักรที ่เกี่ยวข้อง 
+• แสดงกำรวัดควำมเร็ว (Gauge Speed): ใช้กราฟหรือมิเตอร์เพื ่อแสดงความเร็วในการท างานของเครื่องจักร 
+• แสดงรำยละเอยดของเครองจกร: ข้อมูลเกี่ยวกับเครื่องจักร เช่น รุ ่น, สถานะการท างาน เป็นต้น 
+
+![image](https://github.com/user-attachments/assets/ec13fb38-1514-4784-af9a-f18f3b5e0e79)
+
+![image](https://github.com/user-attachments/assets/66af819b-ca22-4913-8318-73c548215976)
+
+และส่วน header จะเป็น วันและเวลาที ่บันทึกข้อมูล
+ 
+หน้า Storage Area ประกอบด้วย
+• แสดงกำรมองเหนขอมล: การแสดงผลในลักษณะของกราฟหรือแผนภูมิที ่แสดงข้อมูลที ่เกี่ยวข้องกับการเก็บข้อมูล 
+• แสดงชอของพนทเกบขอมล: ชื ่อหรือรหัสของพื ้นที ่เก็บข้อมูล 
+• แสดงระดบของพนทเกบขอมล: ระดับหรือปริมาณที ่เก็บได้ในพื ้นที ่นั้น
+
+![image](https://github.com/user-attachments/assets/de3cfe66-3558-44fe-afb6-3b9b0fb9dddd)
+
+![image](https://github.com/user-attachments/assets/2a57feab-e428-471f-b2d5-36d7b585482c)
+
+
